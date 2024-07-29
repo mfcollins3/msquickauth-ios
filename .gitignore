@@ -1,0 +1,14 @@
+# Copyright 2024 Michael F. Collins, III
+#
+# 
+
+.DS_Store
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
+Derived/
+MicrosoftQuickAuth.xcodeproj/
