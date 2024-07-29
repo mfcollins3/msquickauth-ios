@@ -132,4 +132,42 @@ struct SignUpView: View {
 }
 ```
 
-Similar code should work for login as well. Just remember to update the view model to indicate that the button is for `sign in` and not `sign up`.
+Similar code should work for login as well. Just remember to update the view model to indicate that the button is for _sign in_ and not _sign up_.
+
+Finally, the Sign In with Microsoft branding guidelines require the button to use the Segoe UI Semi Bold font which is embedded in the package. This font must be registered with the application upon startup. You can put this in your `App` struct, but I prefer to do this stuff in the `UIApplication`'s delegate:
+
+```swift
+import MicrosoftQuickAuth
+import UIKit
+]
+final class AppDelegate: NSObject, UIApplicationDelegate {
+    typealias LaunchOptions = [UIApplication.LaunchOptionsKey: Any]
+
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: LaunchOptions? = nil
+    ) -> Bool {
+        var error: NSError?
+        guard MSQARegisterFonts(&error) else {
+            fatalError("Failed to register Microsoft Quick Auth fonts: \(error?.localizedDescription ?? "unknown error")")
+        }
+
+        return true
+    }
+}
+```
+
+Don't forget to access the `AppDelegate` object in the `App` struct:
+
+```swift
+import SwiftUI
+
+@main
+struct MyApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
+    var body: some Scene {
+        MainScene()
+    }
+}
+```
